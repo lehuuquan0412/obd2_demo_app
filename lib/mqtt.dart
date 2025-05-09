@@ -1,7 +1,6 @@
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
 
-
 class MQTTManager {
   MqttServerClient client;
   final String topic;
@@ -20,12 +19,11 @@ class MQTTManager {
         .withClientIdentifier('flutter_client')
         .startClean()
         .withWillQos(MqttQos.atMostOnce);
-    
+
     client.connectionMessage = connMessage;
   }
 
   void connect() async {
-    assert(client != null);
     try {
       print('client connecting....');
       await client.connect();
@@ -67,15 +65,14 @@ class MQTTManager {
 
       // final MqttPublishMessage recMess = c![0].payload;
       final String pt =
-          MqttPublishPayload.bytesToStringAsString(recMess.payload.message!);
+          MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
       print(
           'Change notification:: topic is <${c[0].topic}>, payload is <-- $pt -->');
       print('');
     });
-    print(
-        'OnConnected client callback - Client connection was sucessful');
+    print('OnConnected client callback - Client connection was sucessful');
   }
 }
 
-final client = MqttServerClient('broker.hivemq.com', 'flutter_client');
-MQTTManager mqtt = MQTTManager(client: client, topic: 'ESP8266_read_data');
+final client = MqttServerClient('test.mosquitto.org', 'flutter_client');
+MQTTManager mqtt = MQTTManager(client: client, topic: '2000/req');

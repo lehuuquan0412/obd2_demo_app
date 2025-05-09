@@ -18,28 +18,42 @@ class _Mode1FirstPageState extends State<Mode1FirstPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Read Data Stream'),
+        title: const Text('Đọc dữ liệu của xe'),
         titleTextStyle: const TextStyle(
-            color: Colors.black, fontSize: 30, fontWeight: FontWeight.bold),
+            color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         backgroundColor: const Color.fromARGB(255, 145, 220, 255),
-        leading: BackButton(
-          color: Colors.black,
-          onPressed: () {
+        leading: PopScope(
+          canPop: false,
+          onPopInvokedWithResult: (bool didPop, result) {
+            if (didPop) {
+              return;
+            }
             mqtt.publish('{"mode":0}');
-            listMode1info.forEach((item) {
+            for (var item in listMode1info) {
               item.status = false;
-            });
+            }
             Navigator.of(context).pop();
           },
+          child: BackButton(
+            color: Colors.black,
+            onPressed: () {
+              mqtt.publish('{"mode":0}');
+              for (var item in listMode1info) {
+                item.status = false;
+              }
+              Navigator.of(context).pop();
+            },
+          ),
         ),
         bottom: PreferredSize(
-          preferredSize: Size.fromHeight(1.0),
+          preferredSize: const Size.fromHeight(1.0),
           child: Container(
             color: Colors.grey,
             height: 2.0,
           ),
         ),
       ),
+      backgroundColor: Colors.white,
       body: Column(
         children: [
           Expanded(
@@ -49,65 +63,59 @@ class _Mode1FirstPageState extends State<Mode1FirstPage> {
           ),
           Row(
             children: [
-              Spacer(),
-              Container(
-                child: ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      listMode1info.forEach((item) {
-                        item.status = true;
-                      });
-                    });
-                  },
-                  child: Text('Select All'),
-                  style: TextButton.styleFrom(
-                    backgroundColor: Colors.red,
-                    foregroundColor: Colors.white,
-                  ),
+              const Spacer(),
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    for (var item in listMode1info) {
+                      item.status = true;
+                    }
+                  });
+                },
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.red,
+                  foregroundColor: Colors.white,
                 ),
+                child: const Text('Chọn tất cả'),
               ),
-              Spacer(),
-              Container(
-                child: ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      listMode1info.forEach((item) {
-                        item.status = false;
-                      });
-                    });
-                  },
-                  child: Text('Clear All'),
-                  style: TextButton.styleFrom(
-                    backgroundColor: Colors.red,
-                    foregroundColor: Colors.white,
-                  ),
+              const Spacer(),
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    for (var item in listMode1info) {
+                      item.status = false;
+                    }
+                  });
+                },
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.red,
+                  foregroundColor: Colors.white,
                 ),
+                child: const Text('Hủy tất cả'),
               ),
-              Spacer(),
-              Container(
-                child: ElevatedButton(
-                  onPressed: () {
-                    int value = 0;
-                    listMode1info.forEach((item) {
-                      if (item.status) {
-                        value |= (1 << item.pri_stat_1);
-                      }
-                    });
-                    mqtt.publish('{"mode":1,"value":$value}');
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                Mode1SecondPage(b: listMode1info)));
-                  },
-                  child: Text('OK'),
-                  style: TextButton.styleFrom(
-                    backgroundColor: Colors.red,
-                    foregroundColor: Colors.white,
-                  ),
+              const Spacer(),
+              ElevatedButton(
+                onPressed: () {
+                  int value = 0;
+                  for (var item in listMode1info) {
+                    if (item.status) {
+                      value |= (1 << item.priStat1);
+                    }
+                  }
+                  mqtt.publish('{"mode":1,"value":$value}');
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              Mode1SecondPage(b: listMode1info)));
+                },
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.red,
+                  foregroundColor: Colors.white,
                 ),
+                child: const Text('OK'),
               ),
-              Spacer(),
+              const Spacer(),
             ],
           ),
         ],

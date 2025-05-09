@@ -1,15 +1,20 @@
+import 'package:app_chan_doan/connection_manage.dart';
 import 'package:app_chan_doan/mqtt.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'dart:math';
 
 class SteeringWheel extends StatefulWidget {
+  const SteeringWheel({super.key});
+
   @override
-  _SteeringWheelState createState() => _SteeringWheelState();
+  State<SteeringWheel> createState() {
+    return _SteeringWheelState();
+  }
 }
 
 class _SteeringWheelState extends State<SteeringWheel> {
-  final _angleRef = FirebaseDatabase.instance.ref('2000/61/STA');
+  final _angleRef = FirebaseDatabase.instance.ref('$verifyId/61/STA');
   double _currentAngle = 0.0;
 
   @override
@@ -18,19 +23,29 @@ class _SteeringWheelState extends State<SteeringWheel> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Training code'),
+        title: const Text('Góc quay vô lăng'),
         titleTextStyle: const TextStyle(
-            color: Colors.black, fontSize: 30, fontWeight: FontWeight.bold),
+            color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         backgroundColor: const Color.fromARGB(255, 145, 220, 255),
-        leading: BackButton(
-          color: Colors.black,
-          onPressed: () {
+        leading: PopScope(
+          canPop: false,
+          onPopInvokedWithResult: (bool didPop, result) {
+            if (didPop) {
+              return;
+            }
             mqtt.publish('{"mode":0}');
             Navigator.of(context).pop();
           },
+          child: BackButton(
+            color: Colors.black,
+            onPressed: () {
+              mqtt.publish('{"mode":0}');
+              Navigator.of(context).pop();
+            },
+          ),
         ),
         bottom: PreferredSize(
-          preferredSize: Size.fromHeight(1.0),
+          preferredSize: const Size.fromHeight(1.0),
           child: Container(
             color: Colors.grey,
             height: 2.0,
@@ -48,23 +63,25 @@ class _SteeringWheelState extends State<SteeringWheel> {
                   snapshot.data!.snapshot.value != null) {
                 double angleInDegrees =
                     double.parse(snapshot.data!.snapshot.value.toString());
-                _currentAngle = angleInDegrees * pi / 180;
+                _currentAngle = (-angleInDegrees) * pi / 180;
                 return Column(
                   children: [
                     Center(
-                      child: Container(
-                        color: Colors.lightBlue,
-                        padding: EdgeInsets.all(8.0),
-                        child: Text(
-                          '$angleInDegrees',
-                          style: TextStyle(fontSize: 20),
+                      child: Card(
+                        color: const Color.fromARGB(255, 100, 180, 246),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Text(
+                            '${(angleInDegrees)} (Độ)',
+                            style: const TextStyle(fontSize: 18),
+                          ),
                         ),
                       ),
                     ),
                     const SizedBox(height: 40),
                     TweenAnimationBuilder<double>(
                       tween: Tween<double>(begin: 0, end: _currentAngle),
-                      duration: Duration(seconds: 1),
+                      duration: const Duration(milliseconds: 200),
                       builder: (context, angle, child) {
                         return Transform.rotate(
                           angle: angle,
@@ -80,7 +97,7 @@ class _SteeringWheelState extends State<SteeringWheel> {
                   ],
                 );
               } else {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               }
             },
           ),

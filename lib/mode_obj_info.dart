@@ -1,445 +1,568 @@
-class mode_obj_info {
-  late var value;
-
+class ModeObjInfo {
+  late dynamic value;
   late String name;
-
-  late String firebase_name;
-
+  late String unit;
+  late String firebaseName;
   late int mode;
-
-  late int pri_stat_1;
-  late int pri_stat_2;
-
+  late int priStat1;
+  late int priStat2;
   bool status = false;
 
-  mode_obj_info(
-      {required this.name,
-      required this.mode,
-      required this.firebase_name,
-      required this.pri_stat_1,
-      required this.pri_stat_2});
+  ModeObjInfo({
+    required this.name,
+    required this.unit,
+    required this.mode,
+    required this.firebaseName,
+    required this.priStat1,
+    required this.priStat2,
+  });
 }
 
-List<mode_obj_info> listMode1info = [
-  mode_obj_info(
-    name: "Calculated Engine Load",
+List<ModeObjInfo> listMode1info = [
+  ModeObjInfo(
+    name: "Tải trọng của động cơ",
+    unit: "%",
     mode: 0x01,
-    firebase_name: "2000/41/CEL",
-    pri_stat_1: 0,
-    pri_stat_2: 0,
+    firebaseName: "/41/CEL",
+    priStat1: 0,
+    priStat2: 0,
   ),
-  mode_obj_info(
-    name: "Engine Coolant Temperature",
+  ModeObjInfo(
+    name: "Nhiệt động nước làm mát",
+    unit: "độ C",
     mode: 0x01,
-    firebase_name: "2000/41/ET",
-    pri_stat_1: 1,
-    pri_stat_2: 0,
+    firebaseName: "/41/ET",
+    priStat1: 1,
+    priStat2: 0,
   ),
-  mode_obj_info(
-    name: "Short Term Fuel Trim - Bank 1",
+  ModeObjInfo(
+    name: "Điều chỉnh nhiên liệu ngắn hạn - Dãy 1",
+    unit: "%",
     mode: 0x01,
-    firebase_name: "2000/41/STFT1",
-    pri_stat_1: 2,
-    pri_stat_2: 0,
+    firebaseName: "/41/STFT1",
+    priStat1: 2,
+    priStat2: 0,
   ),
-  mode_obj_info(
-    name: "Long Term Fuel Trim - Bank 1",
+  ModeObjInfo(
+    name: "Điều chỉnh nhiên liệu dài hạn - Dãy 1",
+    unit: "%",
     mode: 0x01,
-    firebase_name: "2000/41/LTFT1",
-    pri_stat_1: 3,
-    pri_stat_2: 0,
+    firebaseName: "/41/LTFT1",
+    priStat1: 3,
+    priStat2: 0,
   ),
-  mode_obj_info(
-    name: "Intake Manifold Absolute Pressure",
+  ModeObjInfo(
+    name: "Áp suất tuyệt đối đường ống nạp",
+    unit: "kPa",
     mode: 0x01,
-    firebase_name: "2000/41/IMAP",
-    pri_stat_1: 4,
-    pri_stat_2: 0,
+    firebaseName: "/41/IMAP",
+    priStat1: 4,
+    priStat2: 0,
   ),
-  mode_obj_info(
-    name: "Engine Speed",
+  ModeObjInfo(
+    name: "Tốc độ động cơ",
+    unit: "rpm",
     mode: 0x01,
-    firebase_name: "2000/41/ES",
-    pri_stat_1: 5,
-    pri_stat_2: 0,
+    firebaseName: "/41/ES",
+    priStat1: 5,
+    priStat2: 0,
   ),
-  mode_obj_info(
-    name: "Vehicle Speed",
+  ModeObjInfo(
+    name: "Tốc độ của xe",
+    unit: "km/h",
     mode: 0x01,
-    firebase_name: "2000/41/VS",
-    pri_stat_1: 6,
-    pri_stat_2: 0,
+    firebaseName: "/41/VS",
+    priStat1: 6,
+    priStat2: 0,
   ),
-  mode_obj_info(
-    name: "Timing Advance",
+  ModeObjInfo(
+    name: "Góc đánh lửa sớm",
+    unit: "độ trước TDC",
     mode: 0x01,
-    firebase_name: "2000/41/TA",
-    pri_stat_1: 7,
-    pri_stat_2: 0,
+    firebaseName: "/41/TA",
+    priStat1: 7,
+    priStat2: 0,
   ),
-  mode_obj_info(
-    name: "Intake Air Temperature",
+  ModeObjInfo(
+    name: "Nhiệt độ khí nạp",
+    unit: "độ C",
     mode: 0x01,
-    firebase_name: "2000/41/IAT",
-    pri_stat_1: 8,
-    pri_stat_2: 0,
+    firebaseName: "/41/IAT",
+    priStat1: 8,
+    priStat2: 0,
   ),
-  mode_obj_info(
-    name: "Throttle Position",
+  ModeObjInfo(
+    name: "Vị trí bướm ga",
+    unit: "%",
     mode: 0x01,
-    firebase_name: "2000/41/TP",
-    pri_stat_1: 9,
-    pri_stat_2: 0,
+    firebaseName: "/41/TP",
+    priStat1: 9,
+    priStat2: 0,
   ),
-  mode_obj_info(
-    name: "Oxygen Sensors Present",
+  ModeObjInfo(
+    name: "Cảm biến oxy đang hoạt động",
+    unit: "",
     mode: 0x01,
-    firebase_name: "2000/41/OSP",
-    pri_stat_1: 10,
-    pri_stat_2: 0,
+    firebaseName: "/41/OSP",
+    priStat1: 10,
+    priStat2: 0,
   ),
-  mode_obj_info(
-    name: "Oxygen Sensor Voltage 1",
+  ModeObjInfo(
+    name: "Điện áp cảm biến oxy 1",
+    unit: "V",
     mode: 0x01,
-    firebase_name: "2000/41/OSV1",
-    pri_stat_1: 11,
-    pri_stat_2: 0,
+    firebaseName: "/41/OSV1",
+    priStat1: 11,
+    priStat2: 0,
   ),
-  mode_obj_info(
-    name: "Oxygen Sensor Short Term Fuel Trim 1",
+  ModeObjInfo(
+    name: "Điều chỉnh nhiên liệu ngắn hạn cảm biến oxy 1",
+    unit: "%",
     mode: 0x01,
-    firebase_name: "2000/41/STFT1",
-    pri_stat_1: 11,
-    pri_stat_2: 0,
+    firebaseName: "/41/STFT1",
+    priStat1: 11,
+    priStat2: 0,
   ),
-  mode_obj_info(
-    name: "Oxygen Sensor Voltage 2",
+  ModeObjInfo(
+    name: "Điện áp cảm biến oxy 2",
+    unit: "V",
     mode: 0x01,
-    firebase_name: "2000/41/OSV2",
-    pri_stat_1: 12,
-    pri_stat_2: 0,
+    firebaseName: "/41/OSV2",
+    priStat1: 12,
+    priStat2: 0,
   ),
-  mode_obj_info(
-    name: "Oxygen Sensor Short Term Fuel Trim 2",
+  ModeObjInfo(
+    name: "Điều chỉnh nhiên liệu ngắn hạn cảm biến oxy 2",
+    unit: "%",
     mode: 0x01,
-    firebase_name: "2000/41/STFT2",
-    pri_stat_1: 12,
-    pri_stat_2: 0,
+    firebaseName: "/41/STFT2",
+    priStat1: 12,
+    priStat2: 0,
   ),
-  mode_obj_info(
-    name: "OBD Standards",
+  ModeObjInfo(
+    name: "Tiêu chuẩn OBD",
+    unit: "",
     mode: 0x01,
-    firebase_name: "2000/41/OBDS",
-    pri_stat_1: 13,
-    pri_stat_2: 0,
+    firebaseName: "/41/OBDS",
+    priStat1: 13,
+    priStat2: 0,
   ),
-  mode_obj_info(
-    name: "Run Time Since Engine Start",
+  ModeObjInfo(
+    name: "Thời gian kể từ khi khởi động động cơ",
+    unit: "s",
     mode: 0x01,
-    firebase_name: "2000/41/RTES",
-    pri_stat_1: 14,
-    pri_stat_2: 0,
+    firebaseName: "/41/RTES",
+    priStat1: 14,
+    priStat2: 0,
   ),
-  mode_obj_info(
-    name: "Distance Traveled",
+  ModeObjInfo(
+    name: "Quãng đường đã di chuyển",
+    unit: "km",
     mode: 0x01,
-    firebase_name: "2000/41/DT",
-    pri_stat_1: 15,
-    pri_stat_2: 0,
+    firebaseName: "/41/DT",
+    priStat1: 15,
+    priStat2: 0,
   ),
-  mode_obj_info(
-    name: "Commanded Evaporative Purge",
+  ModeObjInfo(
+    name: "Xả hơi nhiên liệu theo lệnh",
+    unit: "%",
     mode: 0x01,
-    firebase_name: "2000/41/CEP",
-    pri_stat_1: 16,
-    pri_stat_2: 0,
+    firebaseName: "/41/CEP",
+    priStat1: 16,
+    priStat2: 0,
   ),
-  mode_obj_info(
-    name: "Warm-ups Since Codes Cleared",
+  ModeObjInfo(
+    name: "Số lần đạt nhiệt độ làm việc sau khi xóa lỗi",
+    unit: "",
     mode: 0x01,
-    firebase_name: "2000/41/WSCC",
-    pri_stat_1: 17,
-    pri_stat_2: 0,
+    firebaseName: "/41/WSCC",
+    priStat1: 17,
+    priStat2: 0,
   ),
-  mode_obj_info(
-    name: "Distance Traveled Since Codes Cleared",
+  ModeObjInfo(
+    name: "Quãng đường đã đi từ khi các lỗi được xóa",
+    unit: "km",
     mode: 0x01,
-    firebase_name: "2000/41/DTCC",
-    pri_stat_1: 18,
-    pri_stat_2: 0,
+    firebaseName: "/41/DTCC",
+    priStat1: 18,
+    priStat2: 0,
   ),
-  mode_obj_info(
-    name: "Absolute Barometric Pressure",
+  ModeObjInfo(
+    name: "Áp suất khí quyển tuyệt đối",
+    unit: "kPa",
     mode: 0x01,
-    firebase_name: "2000/41/ABP",
-    pri_stat_1: 19,
-    pri_stat_2: 0,
+    firebaseName: "/41/ABP",
+    priStat1: 19,
+    priStat2: 0,
   ),
-  mode_obj_info(
-    name: "Control Module Voltage",
+  ModeObjInfo(
+    name: "Điện áp mô đun điều khiển",
+    unit: "V",
     mode: 0x01,
-    firebase_name: "2000/41/CMV",
-    pri_stat_1: 20,
-    pri_stat_2: 0,
+    firebaseName: "/41/CMV",
+    priStat1: 20,
+    priStat2: 0,
   ),
-  mode_obj_info(
-    name: "Absolute Load Value",
+  ModeObjInfo(
+    name: "Giá trị tải tuyệt đối",
+    unit: "%",
     mode: 0x01,
-    firebase_name: "2000/41/ALV",
-    pri_stat_1: 21,
-    pri_stat_2: 0,
+    firebaseName: "/41/ALV",
+    priStat1: 21,
+    priStat2: 0,
   ),
-  mode_obj_info(
-    name: "Commanded Air-Fuel Equivalence Ratio",
+  ModeObjInfo(
+    name: "Tỷ lệ không khí-nhiên liệu điều khiển",
+    unit: "ratio",
     mode: 0x01,
-    firebase_name: "2000/41/CAFER",
-    pri_stat_1: 22,
-    pri_stat_2: 0,
+    firebaseName: "/41/CAFER",
+    priStat1: 22,
+    priStat2: 0,
   ),
-  mode_obj_info(
-    name: "Relative Throttle Position",
+  ModeObjInfo(
+    name: "Vị trí tương đối của bướm ga",
+    unit: "%",
     mode: 0x01,
-    firebase_name: "2000/41/RTP",
-    pri_stat_1: 23,
-    pri_stat_2: 0,
+    firebaseName: "/41/RTP",
+    priStat1: 23,
+    priStat2: 0,
   ),
-  mode_obj_info(
-    name: "Ambient Air Temperature",
+  ModeObjInfo(
+    name: "Nhiệt độ không khí xung quanh",
+    unit: "độ C",
     mode: 0x01,
-    firebase_name: "2000/41/AAT",
-    pri_stat_1: 24,
-    pri_stat_2: 0,
+    firebaseName: "/41/AAT",
+    priStat1: 24,
+    priStat2: 0,
   ),
-  mode_obj_info(
-    name: "Absolute Throttle Position B",
+  ModeObjInfo(
+    name: "Vị trí bướm ga tuyệt đối B",
+    unit: "%",
     mode: 0x01,
-    firebase_name: "2000/41/ATPB",
-    pri_stat_1: 25,
-    pri_stat_2: 0,
+    firebaseName: "/41/ATPB",
+    priStat1: 25,
+    priStat2: 0,
   ),
-  mode_obj_info(
-    name: "Accelerator Pedal Position D",
+  ModeObjInfo(
+    name: "Vị trí bàn đạp ga D",
+    unit: "%",
     mode: 0x01,
-    firebase_name: "2000/41/APPD",
-    pri_stat_1: 26,
-    pri_stat_2: 0,
+    firebaseName: "/41/APPD",
+    priStat1: 26,
+    priStat2: 0,
   ),
-  mode_obj_info(
-    name: "Accelerator Pedal Position E",
+  ModeObjInfo(
+    name: "Vị trí bàn đạp ga E",
+    unit: "%",
     mode: 0x01,
-    firebase_name: "2000/41/APPE",
-    pri_stat_1: 27,
-    pri_stat_2: 0,
+    firebaseName: "/41/APPE",
+    priStat1: 27,
+    priStat2: 0,
   ),
-  mode_obj_info(
-    name: "Commanded Throttle Actuator",
+  ModeObjInfo(
+    name: "Bộ chấp hành bướm ga điều khiển",
+    unit: "%",
     mode: 0x01,
-    firebase_name: "2000/41/CTA",
-    pri_stat_1: 28,
-    pri_stat_2: 0,
+    firebaseName: "/41/CTA",
+    priStat1: 28,
+    priStat2: 0,
   ),
-  mode_obj_info(
-    name: "Fuel Type",
+  ModeObjInfo(
+    name: "Loại nhiên liệu",
+    unit: "",
     mode: 0x01,
-    firebase_name: "2000/41/FT",
-    pri_stat_1: 29,
-    pri_stat_2: 0,
+    firebaseName: "/41/FT",
+    priStat1: 29,
+    priStat2: 0,
   ),
-  mode_obj_info(
-    name: "Relative Accelerator Pedal Position",
+  ModeObjInfo(
+    name: "Vị trí tương đối của bàn đạp ga",
+    unit: "%",
     mode: 0x01,
-    firebase_name: "2000/41/RAPP",
-    pri_stat_1: 30,
-    pri_stat_2: 0,
+    firebaseName: "/41/RAPP",
+    priStat1: 30,
+    priStat2: 0,
   ),
 ];
 
-List<mode_obj_info> listMode4info = [
-  mode_obj_info(
-    name: "Injector 1",
+List<ModeObjInfo> listMode4info = [
+  ModeObjInfo(
+    name: "Kim phun 1",
+    unit: "",
     mode: 0x30,
-    firebase_name: "2000/70/INJ1",
-    pri_stat_1: 0x10,
-    pri_stat_2: 1,
+    firebaseName: "/70/IJ1",
+    priStat1: 0x10,
+    priStat2: 1,
   ),
-  mode_obj_info(
-    name: "Injector 2",
+  ModeObjInfo(
+    name: "Kim phun 2",
+    unit: "",
     mode: 0x30,
-    firebase_name: "2000/70/INJ2",
-    pri_stat_1: 0x10,
-    pri_stat_2: 2,
+    firebaseName: "/70/IJ2",
+    priStat1: 0x10,
+    priStat2: 2,
   ),
-  mode_obj_info(
-    name: "Injector 3",
+  ModeObjInfo(
+    name: "Kim phun 3",
+    unit: "",
     mode: 0x30,
-    firebase_name: "2000/70/INJ3",
-    pri_stat_1: 0x10,
-    pri_stat_2: 3,
+    firebaseName: "/70/IJ3",
+    priStat1: 0x10,
+    priStat2: 3,
   ),
-  mode_obj_info(
-    name: "Injector 4",
+  ModeObjInfo(
+    name: "Kim phun 4",
+    unit: "",
     mode: 0x30,
-    firebase_name: "2000/70/INJ4",
-    pri_stat_1: 0x10,
-    pri_stat_2: 4,
+    firebaseName: "/70/IJ4",
+    priStat1: 0x10,
+    priStat2: 4,
   ),
-  mode_obj_info(
-    name: "Fuel Pump",
+  ModeObjInfo(
+    name: "Bơm nhiên liệu",
+    unit: "",
     mode: 0x30,
-    firebase_name: "2000/70/ACT/11",
-    pri_stat_1: 0x11,
-    pri_stat_2: 0,
+    firebaseName: "/70/ACT/11",
+    priStat1: 0x11,
+    priStat2: 0,
   ),
-  mode_obj_info(
-    name: "Purge Control Solenoid Valve",
+  ModeObjInfo(
+    name: "Van kiểm soát xả hơi nhiên liệu",
+    unit: "",
     mode: 0x30,
-    firebase_name: "2000/70/ACT/12",
-    pri_stat_1: 0x12,
-    pri_stat_2: 0,
+    firebaseName: "/70/ACT/12",
+    priStat1: 0x12,
+    priStat2: 0,
   ),
-  mode_obj_info(
-    name: "Ignition Timing 5 BTDC",
+  ModeObjInfo(
+    name: "Góc đánh lửa 5 độ trước điểm chết trên",
+    unit: "",
     mode: 0x30,
-    firebase_name: "2000/70/ACT/13",
-    pri_stat_1: 0x13,
-    pri_stat_2: 0,
+    firebaseName: "/70/ACT/13",
+    priStat1: 0x13,
+    priStat2: 0,
   ),
-  mode_obj_info(
-    name: "Vent Solenoid Valve",
+  ModeObjInfo(
+    name: "Van điện từ điều khiển thông gió",
+    unit: "",
     mode: 0x30,
-    firebase_name: "2000/70/ACT/17",
-    pri_stat_1: 0x17,
-    pri_stat_2: 0,
+    firebaseName: "/70/ACT/17",
+    priStat1: 0x17,
+    priStat2: 0,
   ),
-  mode_obj_info(
-    name: "A/C Compressor Relay",
+  ModeObjInfo(
+    name: "Rơ le máy nén điều hòa",
+    unit: "",
     mode: 0x30,
-    firebase_name: "2000/70/ACT/18",
-    pri_stat_1: 0x18,
-    pri_stat_2: 0,
+    firebaseName: "/70/ACT/18",
+    priStat1: 0x18,
+    priStat2: 0,
   ),
-  mode_obj_info(
-    name: "Oil Feeder Control Valve",
+  ModeObjInfo(
+    name: "Van điều khiển cấp dầu",
+    unit: "",
     mode: 0x30,
-    firebase_name: "2000/70/ACT/19",
-    pri_stat_1: 0x19,
-    pri_stat_2: 0,
+    firebaseName: "/70/ACT/19",
+    priStat1: 0x19,
+    priStat2: 0,
   ),
-  mode_obj_info(
-    name: "Cooling Fan Relay(High)",
+  ModeObjInfo(
+    name: "Rơ le quạt làm mát (cao)",
+    unit: "",
     mode: 0x30,
-    firebase_name: "2000/70/ACT/14",
-    pri_stat_1: 0x14,
-    pri_stat_2: 0,
+    firebaseName: "/70/ACT/14",
+    priStat1: 0x14,
+    priStat2: 0,
   ),
-  mode_obj_info(
-    name: "Cooling Fan Relay(Low)",
+  ModeObjInfo(
+    name: "Rơ le quạt làm mát (thấp)",
+    unit: "",
     mode: 0x30,
-    firebase_name: "2000/70/ACT/15",
-    pri_stat_1: 0x15,
-    pri_stat_2: 0,
+    firebaseName: "/70/ACT/15",
+    priStat1: 0x15,
+    priStat2: 0,
   ),
 ];
 
-List<mode_obj_info> listMode6info = [
-  mode_obj_info(
-    name: "O2 Sensor Bank 1 Sensor 1",
+List<ModeObjInfo> listMode6info = [
+  ModeObjInfo(
+    name: "Dữ liệu đánh lửa sai xi lanh 1 (0B)",
+    unit: "",
     mode: 0x06,
-    firebase_name: "2000/46/OSBS",
-    pri_stat_1: 0,
-    pri_stat_2: 0,
+    firebaseName: "/46/MCD1/0B",
+    priStat1: 0,
+    priStat2: 0,
   ),
-  mode_obj_info(
-    name: "Catalyst Monitor Bank 1",
+  ModeObjInfo(
+    name: "Dữ liệu đánh lửa sai xi lanh 1 (0C)",
+    unit: "",
     mode: 0x06,
-    firebase_name: "2000/46/CMB",
-    pri_stat_1: 0,
-    pri_stat_2: 0,
+    firebaseName: "/46/MCD1/0C",
+    priStat1: 0,
+    priStat2: 0,
   ),
-  mode_obj_info(
-    name: "Misfile Cylinder 1 Data",
+  ModeObjInfo(
+    name: "Dữ liệu đánh lửa sai xi lanh 2 (0B)",
+    unit: "",
     mode: 0x06,
-    firebase_name: "2000/46/MCD1/0B",
-    pri_stat_1: 0,
-    pri_stat_2: 0,
+    firebaseName: "/46/MCD2/0B",
+    priStat1: 0,
+    priStat2: 0,
   ),
-  mode_obj_info(
-    name: "Misfile Cylinder 1 Data",
+  ModeObjInfo(
+    name: "Dữ liệu đánh lửa sai xi lanh 2 (0C)",
+    unit: "",
     mode: 0x06,
-    firebase_name: "2000/46/MCD1/0C",
-    pri_stat_1: 0,
-    pri_stat_2: 0,
+    firebaseName: "/46/MCD2/0C",
+    priStat1: 0,
+    priStat2: 0,
   ),
-  mode_obj_info(
-    name: "Misfile Cylinder 2 Data",
+  ModeObjInfo(
+    name: "Dữ liệu đánh lửa sai xi lanh 3 (0B)",
+    unit: "",
     mode: 0x06,
-    firebase_name: "2000/46/MCD2/0B",
-    pri_stat_1: 0,
-    pri_stat_2: 0,
+    firebaseName: "/46/MCD3/0B",
+    priStat1: 0,
+    priStat2: 0,
   ),
-  mode_obj_info(
-    name: "Misfile Cylinder 2 Data",
+  ModeObjInfo(
+    name: "Dữ liệu đánh lửa sai xi lanh 3 (0C)",
+    unit: "",
     mode: 0x06,
-    firebase_name: "2000/46/MCD2/0C",
-    pri_stat_1: 0,
-    pri_stat_2: 0,
+    firebaseName: "/46/MCD3/0C",
+    priStat1: 0,
+    priStat2: 0,
   ),
-  mode_obj_info(
-    name: "Misfile Cylinder 3 Data",
+  ModeObjInfo(
+    name: "Dữ liệu đánh lửa sai xi lanh 4 (0B)",
+    unit: "",
     mode: 0x06,
-    firebase_name: "2000/46/MCD3/0B",
-    pri_stat_1: 0,
-    pri_stat_2: 0,
+    firebaseName: "/46/MCD4/0B",
+    priStat1: 0,
+    priStat2: 0,
   ),
-  mode_obj_info(
-    name: "Misfile Cylinder 3 Data",
+  ModeObjInfo(
+    name: "Dữ liệu đánh lửa sai xi lanh 4 (0C)",
+    unit: "",
     mode: 0x06,
-    firebase_name: "2000/46/MCD3/0C",
-    pri_stat_1: 0,
-    pri_stat_2: 0,
+    firebaseName: "/46/MCD4/0C",
+    priStat1: 0,
+    priStat2: 0,
   ),
-  mode_obj_info(
-    name: "Misfile Cylinder 4 Data",
+  ModeObjInfo(
+    name: "Cảm biến oxy Dãy 1 Cảm biến 1",
+    unit: "",
     mode: 0x06,
-    firebase_name: "2000/46/MCD4/0B",
-    pri_stat_1: 0,
-    pri_stat_2: 0,
+    firebaseName: "/46/OSBS",
+    priStat1: 0,
+    priStat2: 0,
   ),
-  mode_obj_info(
-    name: "Misfile Cylinder 4 Data",
+  ModeObjInfo(
+    name: "Giám sát bộ chuyển hóa xúc tác",
+    unit: "",
     mode: 0x06,
-    firebase_name: "2000/46/MCD4/0C",
-    pri_stat_1: 0,
-    pri_stat_2: 0,
+    firebaseName: "/46/CMB",
+    priStat1: 0,
+    priStat2: 0,
   ),
 ];
 
-List<mode_obj_info> listMode3info = [
-  mode_obj_info(
-    name: "Stored DTC",
+List<ModeObjInfo> listMode3info = [
+  ModeObjInfo(
+    name: "DTC đã lưu trữ",
+    unit: "",
     mode: 0x03,
-    firebase_name: "2000/43/DTC",
-    pri_stat_1: 0,
-    pri_stat_2: 0,
+    firebaseName: "/43/DTC",
+    priStat1: 0,
+    priStat2: 0,
   ),
 ];
 
-List<mode_obj_info> listMode7info = [
-  mode_obj_info(
-    name: "Pending DTC",
+List<ModeObjInfo> listMode7info = [
+  ModeObjInfo(
+    name: "DTC đang xử lý",
+    unit: "",
     mode: 0x07,
-    firebase_name: "2000/47/DTC",
-    pri_stat_1: 0,
-    pri_stat_2: 0,
+    firebaseName: "/47/DTC",
+    priStat1: 0,
+    priStat2: 0,
   ),
 ];
 
-List<mode_obj_info> listMode9info = [
-  mode_obj_info(
-    name: "VIN",
+List<ModeObjInfo> listMode9info = [
+  ModeObjInfo(
+    name: "Số VIN",
+    unit: "",
     mode: 0x09,
-    firebase_name: "2000/49/VIN",
-    pri_stat_1: 0,
-    pri_stat_2: 0,
+    firebaseName: "/49/VIN",
+    priStat1: 0,
+    priStat2: 0,
+  ),
+];
+
+List<ModeObjInfo> listRadarinfo = [
+  ModeObjInfo(
+    name: "Tải trọng của động cơ",
+    unit: "%",
+    mode: 0x01,
+    firebaseName: "/41/CEL",
+    priStat1: 0,
+    priStat2: 0,
+  ),
+  ModeObjInfo(
+    name: "Nhiệt động nước làm mát",
+    unit: "độ C",
+    mode: 0x01,
+    firebaseName: "/41/ET",
+    priStat1: 1,
+    priStat2: 0,
+  ),
+  ModeObjInfo(
+    name: "Áp suất tuyệt đối đường ống nạp",
+    unit: "kPa",
+    mode: 0x01,
+    firebaseName: "/41/IMAP",
+    priStat1: 4,
+    priStat2: 0,
+  ),
+  ModeObjInfo(
+    name: "Tốc độ động cơ",
+    unit: "rpm",
+    mode: 0x01,
+    firebaseName: "/41/ES",
+    priStat1: 5,
+    priStat2: 0,
+  ),
+  ModeObjInfo(
+    name: "Tốc độ của xe",
+    unit: "km/h",
+    mode: 0x01,
+    firebaseName: "/41/VS",
+    priStat1: 6,
+    priStat2: 0,
+  ),
+  ModeObjInfo(
+    name: "Nhiệt độ khí nạp",
+    unit: "độ C",
+    mode: 0x01,
+    firebaseName: "/41/IAT",
+    priStat1: 8,
+    priStat2: 0,
+  ),
+  ModeObjInfo(
+    name: "Vị trí bướm ga",
+    unit: "%",
+    mode: 0x01,
+    firebaseName: "/41/TP",
+    priStat1: 9,
+    priStat2: 0,
+  ),
+  ModeObjInfo(
+    name: "Điện áp mô đun điều khiển",
+    unit: "V",
+    mode: 0x01,
+    firebaseName: "/41/CMV",
+    priStat1: 20,
+    priStat2: 0,
   ),
 ];

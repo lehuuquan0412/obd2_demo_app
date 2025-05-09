@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:math' as math;
-import 'package:app_chan_doan/mode_1/mode_1_second_page.dart';
 import 'package:app_chan_doan/mode_obj_info.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class AppColors {
   static const Color contentColorCyan = Color.fromARGB(255, 0, 130, 150);
@@ -13,7 +13,7 @@ class AppColors {
 class ChartWidget extends StatefulWidget {
   const ChartWidget({super.key, required this.chartValue});
 
-  final mode_obj_info chartValue;
+  final ModeObjInfo chartValue;
 
   @override
   State<ChartWidget> createState() {
@@ -27,28 +27,37 @@ class _ChartWidgetState extends State<ChartWidget> {
     AppColors.contentColorBlue,
   ];
 
-  List<FlSpot> Points = []; // Danh sách điểm dữ liệu
+  List<FlSpot> points = [];
   Timer? timer;
   int xValue = 0;
-  int currentValue = 0;
+  dynamic currentValue = 0;
 
   @override
   void initState() {
     super.initState();
-    // Khởi tạo giá trị ngẫu nhiên và cập nhật mỗi giây
-    timer = Timer.periodic(Duration(milliseconds: 100), (timer) {
+    timer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
       setState(() {
-        currentValue = widget.chartValue.value; // Hàm cập nhật giá trị biến int
-        Points.add(FlSpot(xValue.toDouble(), currentValue.toDouble()));
+        currentValue = widget.chartValue.value;
+        points.add(FlSpot(xValue.toDouble(), currentValue.toDouble()));
         xValue++;
-        Points.removeWhere((point) => point.x < xValue - 100);
+        points.removeWhere((point) => point.x < xValue - 100);
       });
     });
+
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
   }
 
   @override
   void dispose() {
     timer?.cancel();
+
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     super.dispose();
   }
 
@@ -61,70 +70,55 @@ class _ChartWidgetState extends State<ChartWidget> {
       body: Stack(
         children: [
           Center(
-            child: Points.isNotEmpty
+            child: points.isNotEmpty
                 ? Container(
                     padding: const EdgeInsets.only(
                         top: 40, bottom: 20, left: 20, right: 20),
                     height: screenHeight * 0.9,
                     child: LineChart(mainChartData()))
-                : CircularProgressIndicator(),
+                : const CircularProgressIndicator(),
           ),
           Positioned(
-            top: screenHeight * 0.45, // Adjusted dynamically
-            left: screenWidth * -0.05, // Adjusted dynamically
+            top: screenHeight * 0.45,
+            left: screenWidth * -0.05,
             child: Transform.rotate(
               angle: -math.pi / 2,
               child: Text(
-                '${widget.chartValue.name} (   )',
+                '${widget.chartValue.name} (${widget.chartValue.unit})',
                 style: const TextStyle(
                   fontSize: 15,
                   color: Colors.black,
-                  // fontFamily: 'Times',
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
           ),
           Positioned(
-            bottom: screenHeight * 0.05, // Adjusted dynamically
-            right: screenWidth * 0.4, // Adjusted dynamically
+            bottom: screenHeight * 0.05,
+            right: screenWidth * 0.4,
             child: const Text(
-              'Times (ms)',
+              'Thời gian (ms)',
               style: TextStyle(
                 fontSize: 15,
                 color: Colors.black,
-                // fontFamily: 'Times',
                 fontStyle: FontStyle.italic,
                 fontWeight: FontWeight.bold,
               ),
             ),
           ),
           Positioned(
-            bottom: screenHeight * 0.88, // Adjusted dynamically
-            right: screenWidth * 0.35, // Adjusted dynamically
+            bottom: screenHeight * 0.88,
+            right: screenWidth * 0.35,
             child: Text(
-              '${widget.chartValue.name} Chart',
+              'Đồ thị ${widget.chartValue.name}',
               style: const TextStyle(
                 color: Color.fromARGB(255, 190, 123, 224),
                 fontSize: 20,
-                // fontFamily: 'Times',
                 fontStyle: FontStyle.italic,
                 fontWeight: FontWeight.bold,
               ),
             ),
           ),
-          // Positioned(
-          //   top: screenHeight * 0.05, // Adjusted dynamically
-          //   left: screenWidth * 0.05, // Adjusted dynamically
-          //   child: IconButton(
-          //     icon: const Icon(Icons.arrow_back,
-          //         size: 30, color: Colors.black),
-          //     onPressed: () {
-          //       Navigator.pushReplacement(context,
-          //           MaterialPageRoute(builder: (context) => Mode1SecondPage(b: listMode1info)));
-          //     },
-          //   ),
-          // ),
         ],
       ),
     );
@@ -141,18 +135,16 @@ class _ChartWidgetState extends State<ChartWidget> {
         drawVerticalLine: true,
         getDrawingHorizontalLine: (value) {
           return const FlLine(
-            color: Color.fromARGB(
-                255, 150, 150, 150), // Change to your desired color
+            color: Color.fromARGB(255, 150, 150, 150),
             strokeWidth: 1.0,
-            dashArray: [5, 3], // Set the thickness of the line
+            dashArray: [5, 3],
           );
         },
         getDrawingVerticalLine: (value) {
           return const FlLine(
-            color: Color.fromARGB(
-                255, 150, 150, 150), // Change to your desired color
+            color: Color.fromARGB(255, 150, 150, 150),
             strokeWidth: 1.0,
-            dashArray: [5, 3], // Set the thickness of the line
+            dashArray: [5, 3],
           );
         },
       ),
@@ -195,9 +187,9 @@ class _ChartWidgetState extends State<ChartWidget> {
       ),
       lineBarsData: [
         LineChartBarData(
-            spots: Points,
+            spots: points,
             isCurved: true,
-            dotData: FlDotData(show: false),
+            dotData: const FlDotData(show: false),
             belowBarData: BarAreaData(
               show: false,
             ),
@@ -220,7 +212,6 @@ class _ChartWidgetState extends State<ChartWidget> {
             color: Colors.red,
             fontWeight: FontWeight.bold,
             fontSize: 15,
-            // fontFamily: 'Times',
           ),
         );
         break;
@@ -231,7 +222,6 @@ class _ChartWidgetState extends State<ChartWidget> {
             color: Colors.blue,
             fontWeight: FontWeight.bold,
             fontSize: 15,
-            // fontFamily: 'Times',
           ),
         );
         break;
@@ -242,7 +232,6 @@ class _ChartWidgetState extends State<ChartWidget> {
             color: Colors.green,
             fontWeight: FontWeight.bold,
             fontSize: 15,
-            // fontFamily: 'Times',
           ),
         );
         break;
@@ -251,7 +240,7 @@ class _ChartWidgetState extends State<ChartWidget> {
     }
     return SideTitleWidget(
       axisSide: meta.axisSide,
-      space: 15, // Default value
+      space: 15,
       child: text,
     );
   }
@@ -263,7 +252,6 @@ class _ChartWidgetState extends State<ChartWidget> {
         '$displayValue',
         style: const TextStyle(
           color: Colors.black,
-          // fontFamily: 'Times',
           fontWeight: FontWeight.bold,
           fontSize: 15,
         ),

@@ -1,8 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="app_chan_doan"
+        android:label="KTGT"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+
+        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyC8bgDOw6kUmApgzWH95d5YRujGfnq1iVQ"/>
+
         <activity
             android:name=".MainActivity"
             android:exported="true"

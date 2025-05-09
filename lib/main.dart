@@ -1,17 +1,10 @@
-import 'package:app_chan_doan/diagnostic/diagnostic_page.dart';
-import 'package:app_chan_doan/diagnostic/show_dtc.dart';
-import 'package:app_chan_doan/menu_page.dart';
-import 'package:app_chan_doan/mode_1/mode_1_first_page.dart';
-import 'package:app_chan_doan/mode_4/mode_4_first_page.dart';
-import 'package:app_chan_doan/mode_6/mode_6_page.dart';
-import 'package:app_chan_doan/mode_9/module_information_page.dart';
-import 'package:app_chan_doan/mode_obj_info.dart';
+import 'package:app_chan_doan/connection_manage.dart';
 import 'package:app_chan_doan/mqtt.dart';
-import 'package:app_chan_doan/training_code/steering_wheel.dart';
+import 'package:app_chan_doan/seri_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-import 'package:app_chan_doan/login_page.dart';
+import 'package:app_chan_doan/menu_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,16 +12,45 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  mqtt.initializeMQTTClient();
   mqtt.connect();
 
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
+  @overrideF
+  State<MyApp> createState() {
+    return _MyAppState();
+  }
+}
+
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.detached) {
+      mqtt.publish('{"disconnect":$id}');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: LoginPage(),
+    return const MaterialApp(
+      home: MenuPage(),
       debugShowCheckedModeBanner: false,
     );
   }

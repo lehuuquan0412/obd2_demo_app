@@ -1,4 +1,6 @@
-import 'package:app_chan_doan/menu_page.dart';
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:app_chan_doan/seri_page.dart';
 import 'package:app_chan_doan/sigup_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -7,7 +9,9 @@ class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<LoginPage> createState() {
+    return _LoginPageState();
+  }
 }
 
 class _LoginPageState extends State<LoginPage> {
@@ -20,100 +24,124 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            width: double.infinity,
-            height: double.infinity,
-            // decoration: const BoxDecoration(
-            //   image: DecorationImage(
-            //     image: AssetImage("assets/images/login.png"),
-            //     fit: BoxFit.cover,
-            //   ),
-            // ),
-          ),
-          SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.1),
-                    Center(
-                      child: Image.asset(
-                        'assets/images/logoBK.png',
-                        width: 150,
-                        height: 130,
-                      ),
-                    ),
-                    const SizedBox(height: 15),
-                    const Text('Welcome!',
-                        style: TextStyle(
-                            fontSize: 30, fontWeight: FontWeight.bold)),
-                    const SizedBox(height: 10),
-                    TextFormField(
-                      controller: _emailController,
-                      decoration: const InputDecoration(
-                          labelText: 'Email', prefixIcon: Icon(Icons.email)),
-                      validator: _validateEmail,
-                      keyboardType: TextInputType.emailAddress,
-                    ),
-                    const SizedBox(height: 10),
-                    TextFormField(
-                      controller: _passwordController,
-                      obscureText: true,
-                      decoration: const InputDecoration(
-                          labelText: 'Password', prefixIcon: Icon(Icons.lock)),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        if (_errorMessage != null)
-                          Expanded(
-                            child: Text(_errorMessage!,
-                                style: const TextStyle(
-                                    color: Colors.redAccent, fontSize: 14),
-                                textAlign: TextAlign.left),
-                          ),
-                        TextButton(
-                          onPressed: _sendPasswordResetEmail,
-                          child: const Text(
-                            'Forgot Password?',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ],
-                    ),
-                    ElevatedButton(
-                      onPressed: _attemptLogin,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color.fromARGB(255, 9, 9, 9),
-                        minimumSize: const Size(double.infinity, 50),
-                      ),
-                      child: const Text('Sign In',
-                          style: TextStyle(color: Colors.white)),
-                    ),
-                    TextButton(
-                      onPressed: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => SignUpPage())),
-                      child: const Text('No account? Sign up here',
-                          style: TextStyle(
-                              fontFamily: 'Times',
-                              fontWeight: FontWeight.bold)),
-                    ),
-                    const SizedBox(height: 10),
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.1),
-                  ],
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        body: Stack(
+          children: [
+            Container(
+              width: double.infinity,
+              height: double.infinity,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/images/login.jpg"),
+                  fit: BoxFit.cover,
                 ),
               ),
             ),
-          ),
-        ],
+            SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.1),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            'assets/images/logoVNU.png',
+                            width: 120,
+                            height: 120,
+                          ),
+                          Image.asset(
+                            'assets/images/logoBK.png',
+                            width: 100,
+                            height: 100,
+                          ),
+                          Image.asset(
+                            'assets/images/logoGT.png',
+                            width: 120,
+                            height: 120,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 15),
+                      const Text('Xin chào!',
+                          style: TextStyle(
+                              fontSize: 30, fontWeight: FontWeight.bold)),
+                      const SizedBox(height: 10),
+                      TextFormField(
+                        controller: _emailController,
+                        decoration: const InputDecoration(
+                            labelText: 'Email', prefixIcon: Icon(Icons.email)),
+                        validator: _validateEmail,
+                        keyboardType: TextInputType.emailAddress,
+                      ),
+                      const SizedBox(height: 10),
+                      TextFormField(
+                        controller: _passwordController,
+                        obscureText: true,
+                        decoration: const InputDecoration(
+                            labelText: 'Mật khẩu',
+                            prefixIcon: Icon(Icons.lock)),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          if (_errorMessage != null)
+                            Expanded(
+                              child: Text(_errorMessage!,
+                                  style: const TextStyle(
+                                      color: Colors.redAccent, fontSize: 14),
+                                  textAlign: TextAlign.left),
+                            ),
+                          TextButton(
+                            onPressed: _sendPasswordResetEmail,
+                            child: const Text(
+                              'Quên mật khẩu?',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ],
+                      ),
+                      ElevatedButton(
+                        onPressed: _attemptLogin,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color.fromARGB(255, 9, 9, 9),
+                          minimumSize: const Size(double.infinity, 50),
+                        ),
+                        child: const Text('Đăng nhập',
+                            style: TextStyle(color: Colors.white)),
+                      ),
+                      TextButton(
+                        onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const SignUpPage())),
+                        child: const Text('Tạo tài khoản mới',
+                            style: TextStyle(fontWeight: FontWeight.bold)),
+                      ),
+                      const SizedBox(height: 20),
+                      Center(
+                        child: Image.asset(
+                          'assets/images/logoFAST.png',
+                          width: 150,
+                          height: 150,
+                        ),
+                      ),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.1),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -121,7 +149,7 @@ class _LoginPageState extends State<LoginPage> {
   String? _validateEmail(String? value) {
     if (value == null ||
         !RegExp(r'^[a-zA-Z0-9._]+@[a-zA-Z0-9]+\.[a-zA-Z]+').hasMatch(value)) {
-      return 'Enter a valid email address';
+      return 'Hãy nhập địa chỉ email hợp lệ';
     }
     return null;
   }
@@ -142,12 +170,13 @@ class _LoginPageState extends State<LoginPage> {
       User? user = userCredential.user;
       if (user != null) {
         if (user.emailVerified) {
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => MenuPage()));
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => const SeriPage()));
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text('Please verify your email address to proceed.'),
+              content:
+                  Text('Vui lòng xác minh địa chỉ email của bạn để tiếp tục'),
               duration: Duration(seconds: 5),
             ),
           );
@@ -155,7 +184,7 @@ class _LoginPageState extends State<LoginPage> {
       }
     } catch (e) {
       setState(() {
-        _errorMessage = 'Incorrect password or email';
+        _errorMessage = 'Mật khẩu hoặc email không chính xác';
       });
     }
   }
@@ -165,7 +194,7 @@ class _LoginPageState extends State<LoginPage> {
     if (email.isEmpty) {
       setState(() {
         _errorMessage =
-            "Please enter your email address to reset your password.";
+            "Vui lòng nhập địa chỉ email của bạn để đặt lại mật khẩu";
       });
       return;
     }
@@ -173,11 +202,11 @@ class _LoginPageState extends State<LoginPage> {
       await _firebaseAuth.sendPasswordResetEmail(email: email);
       setState(() {
         _errorMessage =
-            "Password reset email sent. Check your email to reset your password.";
+            "Email đặt lại mật khẩu đã được gửi. Hãy kiểm tra email của bạn để đặt lại mật khẩu.";
       });
     } catch (e) {
       setState(() {
-        _errorMessage = "Error sending password reset email: ${e.toString()}";
+        _errorMessage = "Lỗi khi gửi email đặt lại mật khẩu: ${e.toString()}";
       });
     }
   }

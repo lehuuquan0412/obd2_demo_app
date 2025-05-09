@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class ListCheck extends StatefulWidget {
   const ListCheck({super.key, required this.checkboxValue});
 
-  final List<mode_obj_info> checkboxValue;
+  final List<ModeObjInfo> checkboxValue;
 
   @override
   State<ListCheck> createState() {
@@ -23,7 +23,7 @@ class _ListCheckState extends State<ListCheck> {
           height: 50,
           color: Colors.white,
           child: CheckboxListTile(
-            title: Text('${widget.checkboxValue[index].name}'),
+            title: Text(widget.checkboxValue[index].name),
             value: widget.checkboxValue[index].status,
             onChanged: (bool? value) {
               setState(() {
